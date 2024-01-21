@@ -23,82 +23,68 @@
 ***
 
 1. Вы находитесь в созданном репозитории `FTW`
-2. Блок-схема алгоритма: ![Block-diagram](.drawio.png)
+2. Блок-схема алгоритма: в файле формата drawio
 3. Вы читаете данный фаил `README.md`
 4. Программа по заданному условию.
 
 
 Код программы:
 ```cs
-Commands();
-string[] array = new string[] {};
 
-string fromUser = ReadInput("Введите команду: ");
-switch (fromUser)
-{
-    case "1":
-        array = new string[] { "Hello", "2", "world", ":-)" };
-        break;
-    case "2":
-        array = new string[] { "1234", "1567", "-2", "computer science" };
-        break;
-    case "3":
-        array = new string[] { "Russia", "Denmark", "Kazan" };
-        break;
-    default:
-        Console.WriteLine($"{fromUser} - Такой команды нет");
-        break;
+string[] CreateArray(string[] a) {
+    for (int i = 0; i < a.Length; i++) {
+        Console.WriteLine("Введите "+i.ToString()+" элемент массива:");
+        a[i] = Console.ReadLine().ToString();
+    }
+    return a;
 }
-
-
-int lenNewArray = 0;
-for (int i = 0; i <= array.Length - 1; i++)
-{
-    if (array[i].Length <= 3) lenNewArray++;
+string[] NewMass(string[] a) { 
+    int size=GetCountElem(a);
+    string[] newMass = new string[size];
+    int k = 0;
+    for (int i = 0; i < a.Length; i++) {
+        if ((a[i].Length >= 1) && (a[i].Length <= 3))
+        {
+            newMass[k] = a[i];
+            k++;
+        }
+    }
+    return newMass;
 }
-
-string[] newArray = new string[lenNewArray];
-int idx = 0;
-
-for (int i = 0; i <= array.Length - 1; i++)
-{
-    if (array[i].Length <= 3)
+void PrintNewArray(string []newmass) {
+    Console.WriteLine("Новый массив:");
+    if (newmass.Length == 0)
     {
-        newArray[idx] = array[i];
-        idx++;
+        Console.WriteLine("[]");
+    }
+    else {
+        for (int i = 0; i < newmass.Length; i++) {
+            Console.WriteLine(newmass[i]);
+        }
+    }
+}
+int GetCountElem(string[] a) {
+    int k= 0;
+    for (int i=0;i<a.Length;i++) {
+        if ((a[i].Length >= 1)&&(a[i].Length <= 3)){
+            k += 1;
+        }
+    }
+    return k;
+}
+void PrintMass(string[] a) {
+    Console.WriteLine("Ваш массив:");
+    for (int i = 0; i < a.Length; i++)
+    {
+        Console.WriteLine(a[i]);
     }
 }
 
-PrintArray(array);
-Console.Write("→ ");
-PrintArray(newArray);
-
-// Функция: Вывод команд для работы с программой
-void Commands()
-{
-    Console.WriteLine();
-    Console.WriteLine("СПИСОК КОМАНД:");
-    Console.WriteLine("1 – использовать массив: [“Hello”, “2”, “world”, “:-)”]");
-    Console.WriteLine("2 – использовать массив: [“1234”, “1567”, “-2”, “computer science”]");
-    Console.WriteLine("3 – использовать массив: [“Russia”, “Denmark”, “Kazan”]");
-    Console.WriteLine();
-}
-
-// Функция ввода
-string ReadInput(string msg)
-{
-    Console.Write(msg);
-    return Console.ReadLine();
-}
-
-//  Функция вывода массива в терминал
-void PrintArray(string[] array)
-{
-    Console.Write("[ ");
-    for (int i = 0; i < array.Length; i++)
-    {
-        Console.Write($"“{array[i]}”, ");
-    }
-    Console.Write("] ");
-}
+Console.WriteLine("Введите количество элементов:");
+int k = Int32.Parse(Console.ReadLine());
+string []mass = new string[k];
+mass=CreateArray(mass);
+PrintMass(mass);
+string[]newmass = NewMass(mass);
+PrintNewArray(newmass);
 ```
